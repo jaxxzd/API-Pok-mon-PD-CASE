@@ -24,7 +24,7 @@ const url = "https://pokeapi.co/api/v2/pokemon/";
 // Integração de elementos do HTML com o JS
 
 const card = document.querySelector("#card");
-const btn = document.querySelector("#btn-gerar");
+const btn = document.querySelector(".btn");
 const input = document.querySelector("#input-buscar-pokemon");
 
 // Gerando um número aleatório entre 1 e 500
@@ -52,7 +52,7 @@ function gerarCardPokemon(data) {
     // dados do pokemon
 
     const hp = data.stats[0].base_stat;
-    const imgSrc = data.sprites.versions["generation-v"]["black-white"].animated.front_default;
+    const imgSrc = data.sprites.versions["generation-v"]["black-white"].animated.front_default || data.sprites.front_default;
     const name = data.name;
     const statusAtaque = data.stats[1].base_stat;
     const statusDefesa = data.stats[2].base_stat;
@@ -60,7 +60,7 @@ function gerarCardPokemon(data) {
 
     // Colocando cores no fundo do card com base no tipo do pokémon
 
-    const fundoCor = tipoCor[data.types[0].type.name]
+    const fundoCor = tipoCor[data.types[0].type.name];
 
     // Transformando o HTML do card com dados da API de Pokémon
 
@@ -99,15 +99,23 @@ function gerarCardPokemon(data) {
     // Função chamada pra mostrar os tipos do pokémon
 
     TypesPokemon(data.types);
+    corCard(fundoCor)
 };
 
 // função para buscar os tipos do pokémon buscando por cada item no array do "types", criado o elemento "span", colocando o nome do tipo como conteúdo de texto e acrescentando o span na div com classe ".types" pra colocar os tipos do pokémon no card
 
-TypesPokemon = (types) => {
+const TypesPokemon = types => {
     types.forEach(item => {
         let span = document.createElement("span");
         span.textContent = item.type.name;
         document.querySelector(".types").appendChild(span);
     });
+}
+
+let corCard = cor => {
+    card.style.background = `radial-gradient(circle at 50% 0%, ${cor} 36%, #FFFFFF 0%)`
+    card.querySelectorAll(".types span").forEach((TypeColor) => {
+        TypeColor.style.backgroundColor = cor;
+    })
 }
 

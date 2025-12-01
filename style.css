@@ -48,7 +48,6 @@ body {
 #card {
     width: 350px;
     border-radius: 15px;
-    background: radial-gradient(circle at 50% 0%, orange 45%, #FFFFFF 0%);
     box-shadow: 0px 0px 20px 2px rgba(255, 255, 255, 0.5);
     padding: 36px clamp(12px, 2.3vh, 24px);
 }
@@ -78,8 +77,10 @@ body {
 .poke-img {
     display: block;
     width: 180px;
-    max-height: 200px;
+    height: 180px;
+    max-height: 180px;
     margin: 2vh auto;
+    object-fit: contain;
 }
 
 .types {
@@ -90,10 +91,13 @@ body {
     margin: 20px 0px 40px 0px;
 }
 
-.types p {
+.types span {
     font-size: clamp(12px, 1.9vh, 20px);
     font-weight: 600;
     letter-spacing: 0.4px;
+    padding: 5px 20px;
+    border-radius: 20px;
+    color: #ffffff;
 }
 
 .status {
@@ -103,16 +107,46 @@ body {
     text-align: center;
 }
 
-#btn-gerar {
-    width: 200px;
-    height: 50px;
+.btn {
+    background: none;
+    padding: 16px 80px;
     border: none;
     outline: none;
     border-radius: 10px;
+    background-color: #101010;
     cursor: pointer;
-    background-color: #FFFFFF;
     font-size: 1rem;
     font-weight: 500;
-    background-color: #101010;
     color: #FFFFFF;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.btn:hover {
+    color: #101010;
+    z-index: 999;
+    transform: scale(1.05);
+}
+
+.btn:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    z-index: -1;
+    transition: transform 0.5s;
+    transform-origin: top top;
+}
+
+.btn-gerar::before {
+    transform: scaleX(0);
+}
+
+.btn-gerar:hover::before {
+    transform: scaleX(1);
 }
